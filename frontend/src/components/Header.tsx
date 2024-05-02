@@ -8,7 +8,7 @@ import {
     rem,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { ArrowUpCircle } from "lucide-react";
+import { Cookie } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
@@ -94,7 +94,7 @@ export function HeaderSimple({ links }: HeaderSimpleProps) {
     return (
         <Header height={60}>
             <Container className={classes.header}>
-                <ArrowUpCircle size={28} />
+                <Cookie size={28} />
                 <Group spacing={5} className={classes.links}>
                     {items}
                 </Group>

@@ -1,0 +1,24 @@
+.home-bg{
+    background-color: #cbc3e3;
+    width: 100vw;
+    height: 100vw;
+}
+.home-header{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding-block: 30px;
+    text-align: center;
+}
+
+.home-container {
+    text-align: center;
+    padding-left: 27.5%;
+  }
+  
+.centered-text {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    max-width: 600px; 
+    padding: 10px;
+    border: 1px solid #ccc; 
+    border-radius: 10px; 
+    background-color: #f9f9f9; 
+}
