@@ -1,5 +1,4 @@
 import "./About.css";
-import { db } from "../firebase";
 
 const AboutPage = () => {
 
@@ -14,7 +13,7 @@ const AboutPage = () => {
                         ratings as well as descriptions of the food!
                     </p>
                 </div>
-                    <img className="about-img" src="gs://annie-food-blog.appspot.com/IMG_6903.png" alt="profile-pic"></img>
+                    <img className="about-img" src="https://firebasestorage.googleapis.com/v0/b/annie-food-blog.appspot.com/o/IMG_6903.png?alt=media&token=d6244068-1fde-4584-9aee-e834c4747fb1" alt="profile-pic"></img>
             </div>
         </>
     );

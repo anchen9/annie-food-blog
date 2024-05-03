@@ -1,7 +1,7 @@
 import { ChevronLeft , ChevronRight, Heart, Trash2 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./FoodCard.css"
-//import { db } from "../../../backend/firebase";
+import { BACKEND_BASE_PATH } from "../constants/Navigation";
 
 type Props = {
     children?: React.ReactNode | React.ReactNode[]
@@ -26,13 +26,31 @@ const FoodCard = ({foodname, imglist, descrip, rating, favorite}:Props) => {
             setImg(img-1);
         }
     };
+    const input = {favorite: !heart};
+
     const makeFav =() => {
-        setHeart(!heart);
+        try {
+            fetch(
+                `${BACKEND_BASE_PATH}/api/addfavorite/${foodname.toLowerCase()}`, {
+                    method: "PUT",
+                    headers: {
+                        'content-type': 'application/json',
+                      },
+                    body: JSON.stringify(input),
+                }
+            ).then((res) => res.json())
+            .then((b) => setHeart(b))
+            .catch((error) => {
+                console.log("Errored", error);
+              })
+        } catch(error) {
+            console.log(error);
+        }
     };
 
     const handleDelete = () => {
         try {
-            fetch ("/api/delfood/${foodname}", { method: "DELETE"})
+            fetch (`${BACKEND_BASE_PATH}/api/delfood/${foodname.toLowerCase()}`)
                 .then(() => console.log("Delete successful"))
         } catch(error) {
             console.log(error)

@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, Auth} from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import withFirebaseAuth from 'react-with-firebase-auth';
 import { env } from "process";
 
@@ -27,7 +27,7 @@ const providers = {
   
   const createComponentWithAuth = withFirebaseAuth({
     providers,
-    firebaseAppAuth: auth,
+    firebaseAppAuth: auth as any,
   });
   
   const signInWithGoogle = () => {

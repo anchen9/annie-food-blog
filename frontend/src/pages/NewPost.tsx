@@ -33,10 +33,8 @@ const NewPost = () => {
                 </p>
                 
                 <p>
-                    <form action="/upload" method="post">
-                    <input type="file" name="image" accept="image/*"></input>
+                    <input type="file" name="image" accept="image/jpeg"></input>
                     <button type="submit">Upload</button>
-                    </form>
                 </p>
                 
                 <button type="submit">Submit</button>
