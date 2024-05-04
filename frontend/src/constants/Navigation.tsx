@@ -1,6 +1,7 @@
-import Weather from "../pages/Weather";
-import Counter from "../pages/Counter";
 import HomePage from "../pages/Home";
+import About from "../pages/About";
+import Food from "../pages/Food";
+import NewPost from "../pages/NewPost";
 
 /**
  * TODO: Modify this constant to point to the URL of your backend.
@@ -14,7 +15,7 @@ import HomePage from "../pages/Home";
  * If you've already deployed your app (using `fly launch` or `fly deploy`),
  * you can find the name by running `flyctl status`, under App > Name.
  */
-export const BACKEND_BASE_PATH = 'https://fa23-lec9-demo-soln.fly.dev/api';
+export const BACKEND_BASE_PATH = 'http://localhost:8000';
 
 export const PATHS: {
     link: string;
@@ -27,13 +28,18 @@ export const PATHS: {
         element: <HomePage />,
     },
     {
-        link: "/weather",
-        label: "Weather",
-        element: <Weather />,
+        link: "/food",
+        label: "Food",
+        element: <Food />
     },
     {
-        link: "/counter",
-        label: "Counter",
-        element: <Counter />,
+        link: "/about",
+        label: "About",
+        element: <About />
     },
+    {
+        link: "/newpost",
+        label: "Post", 
+        element: <NewPost />
+    }
 ];

@@ -1,0 +1,28 @@
+.page-bg {
+    text-align: center;
+    background-color: #cbc3e3;
+    width: 100vw;
+    height: 100vw;
+}
+
+.submit-container {
+    text-align: center;
+    padding-left: 27.5%;
+    padding-top: 20px;
+  }
+  
+.centered-text {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    max-width: 600px; 
+    padding: 10px;
+    border: 1px solid #ccc; 
+    border-radius: 10px; 
+    background-color: #f9f9f9; 
+}
+
+.format-buttons{
+    justify-content: center; 
+    align-items: center;
+    box-sizing: border-box;
+    padding-block: 20px;
+}

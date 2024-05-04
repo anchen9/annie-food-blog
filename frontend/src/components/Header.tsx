@@ -6,10 +6,13 @@ import {
     Group,
     Burger,
     rem,
+    Button,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { ArrowUpCircle } from "lucide-react";
+import { Cookie } from "lucide-react";
 import { Link } from "react-router-dom";
+import { signIn, signOut } from "../auth/auth";
+
 
 const useStyles = createStyles((theme) => ({
     header: {
@@ -72,9 +75,21 @@ interface HeaderSimpleProps {
 }
 
 export function HeaderSimple({ links }: HeaderSimpleProps) {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [opened, { toggle }] = useDisclosure(false);
     const [active, setActive] = useState(links[0].link);
     const { classes, cx } = useStyles();
+
+    const handleLoginClick = async () => {
+        if (isLoggedIn) {
+          await signOut();
+        } else {
+          await signIn();
+        }
+    
+        setIsLoggedIn(!isLoggedIn);
+      };
+    
 
     const items = links.map((link) => (
         <Link
@@ -94,10 +109,15 @@ export function HeaderSimple({ links }: HeaderSimpleProps) {
     return (
         <Header height={60}>
             <Container className={classes.header}>
-                <ArrowUpCircle size={28} />
+                <Cookie size={28} />
                 <Group spacing={5} className={classes.links}>
                     {items}
                 </Group>
+                {isLoggedIn ? (
+                    <Button onClick={handleLoginClick}>Sign Out</Button>
+                    ) : (
+                    <Button onClick={handleLoginClick}>Login</Button>
+                    )}{" "}
                 <Burger
                     opened={opened}
                     onClick={toggle}

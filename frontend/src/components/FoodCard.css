@@ -1,0 +1,25 @@
+.food-img{
+    padding: 2rem;
+    justify-content: center;
+    width: 100%;
+ }
+ 
+ 
+ .container {
+    display: flex;
+    width:fit-content;
+    height: fit-content;
+    text-align: left;
+    justify-content: left;
+    padding-block: 10px;
+  }
+
+  .format-text {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    max-width: 30%;
+    padding: 1%;
+    border: 20px solid #cbc3e3;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+ }
+ 

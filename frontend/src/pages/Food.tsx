@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import "./Home.css";
-import { BACKEND_BASE_PATH } from "../constants/Navigation";
-import FoodCard from "../components/FoodCard";
+import FoodCard from "../components/FoodCard.tsx";
+import { useState, useEffect } from "react";
+import "./Food.css";
+import { BACKEND_BASE_PATH } from "../constants/Navigation.tsx";
 
 type FoodData = {
     [key: string]: {
@@ -13,12 +13,13 @@ type FoodData = {
     }
 }
 
-const HomePage = () => {
+const FoodPage = () => {
+
     const [data, setData] = useState<FoodData | null>(null);
 
     useEffect(() => {
         fetch(
-            `${BACKEND_BASE_PATH}/api/favfoods`
+            `${BACKEND_BASE_PATH}/api/allfoods`
         )
           .then((res) => res.json())
           .then((d) => {
@@ -30,17 +31,16 @@ const HomePage = () => {
           })
       }, []
     );
-    
+
+    useEffect(() => {
+        console.log("Data changed to", data);
+    }, [data]);
+
+
     return (
-    <div className="home-bg">
-            <h1 className="home-header">Annie's Food Blog</h1>
-            <div className="home-container">
-                <p className="centered-text">
-                Welcome to my food blog! Here, I post pictures of food I've eaten during my travels 
-                as well as my daily life. Here are some of my favorite foods that I've eaten recently!
-                </p>
-            </div>
-           <div className="food-cards-container">
+        <div className="food-bg">
+            <h1 className="food-header">Food Feed</h1>
+                <div className="food-cards-container">
                     {
                         data 
                             ? Object.entries(data)
@@ -56,9 +56,10 @@ const HomePage = () => {
                                 ) 
                             : <p>Loading...</p>
                     }
-            </div> 
-    </div>  
-    )
+                </div>
+                
+        </div>
+    );
 };
 
-export default HomePage;
+export default FoodPage;
