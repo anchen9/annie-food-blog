@@ -6,6 +6,7 @@
     "dependencies": {
         "@full-stack/common": "1.0.0",
         "@full-stack/types": "1.0.0",
+        "@types/multer": "^1.4.11",
         "@types/node": "^20.8.9",
         "cors": "^2.8.5",
         "dotenv": "^16.4.5",

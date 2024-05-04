@@ -6,5 +6,5 @@ const serviceAccount = require("./.firebase/service_account.json")
 const app = initializeApp({
   credential: cert(serviceAccount),
 });
-const db = getFirestore();
+const db = getFirestore(app);
 export { db };

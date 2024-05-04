@@ -12,7 +12,7 @@ pnpm build
 pnpm dev
 ```
 
-The server will be available at `http://localhost:8080`.
+The server will be available at `http://localhost:8000`.
 The client will be available at `http://localhost:5173`.
 
 ## What's inside?

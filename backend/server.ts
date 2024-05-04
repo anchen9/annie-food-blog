@@ -4,8 +4,10 @@ import cors from "cors";
 import { db } from "./firebase";
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
-import 'firebase/firestore';
+import {doc, setDoc} from 'firebase/firestore';
+
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 const app: Express = express();
@@ -86,38 +88,41 @@ app.get("/api/favfoods/", async(req, res) => {
         console.error(error);
         res.status(500).json({error: "Unable to Retrieve Favorite Foods"});
     }
-})
+});
 
- app.post("/submit", async(req, res) => {
+ app.post("/api/submit", async(req, res) => {
      console.log("POST /api/submit was called");
      try{
         console.log(req.body);
          const body = req.body;
-         const docRef = await db.collection("foodinfo");
-         await docRef.doc(body.name).set( {
-             name: body.name,
-             img: body.img,
-             description: body.description,
-             rating: body.rating,
-             favorite: body.favorite,
-         });
-         res.send("New Post Created");
-     } catch(error) {
+         const docRef = db.collection("foodinfo").doc(body.name.toLowerCase());
+         docRef.set({
+            name: body.name,
+            img: body.img,
+            description: body.description,
+            rating: body.rating,
+            favorite: body.favorite,
+          });
+          console.log("done");
+          res.status(200);
+        } catch(error) {
          console.error(error);
          res.status(500).json({error: "Unable to make New Post"});
      }
  });
 
- app.post("/upload", async(req,res) => {
-    console.log("POST /upload was called");
+ app.post("/api/upload", async(req,res) => {
+    console.log("POST /api/upload was called");
     try {
-        const file = req.body;
+        const file = req.body.file;
+        if (!file) {
+            return res.status(400).json({ error: 'No file uploaded' });
+        }
         console.log(file);
-        const metadata = {
-            contentType: 'image/jpeg'
-          };
-        const storageRef = ref(storage, 'images/' + file.name);
-        const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+        const metadata = { contentType: 'image/jpeg' };
+        const storageRef = ref(storage, 'images/' + file.originalname);
+        const uploadTask = uploadBytesResumable(storageRef, file.buffer, metadata);
+        
         uploadTask.on('state_changed',
             (snapshot) => {
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;

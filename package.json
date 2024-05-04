@@ -12,5 +12,10 @@
         "turbo": "latest"
     },
     "packageManager": "pnpm@8.6.10",
-    "name": "full-stack"
+    "name": "full-stack",
+    "dependencies": {
+        "@firebase/storage": "^0.12.4",
+        "firebase": "^9.17.2",
+        "ts-node": "^10.9.1"
+    }
 }

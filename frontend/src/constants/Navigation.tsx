@@ -2,6 +2,7 @@ import HomePage from "../pages/Home";
 import About from "../pages/About";
 import Food from "../pages/Food";
 import NewPost from "../pages/NewPost";
+import Submitted from "../pages/Submitted";
 
 /**
  * TODO: Modify this constant to point to the URL of your backend.
@@ -41,5 +42,10 @@ export const PATHS: {
         link: "/newpost",
         label: "Post", 
         element: <NewPost />
+    },
+    {
+        link: "/formsubmitted",
+        label: "",
+        element: <Submitted/>
     }
 ];
