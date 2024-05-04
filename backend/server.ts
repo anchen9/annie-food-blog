@@ -1,10 +1,12 @@
 import path from "path";
 import express, { Express } from "express";
 import cors from "cors";
-import { WeatherResponse } from "@full-stack/types";
 import { db } from "./firebase";
-import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
+import { initializeApp } from "firebase/app";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import 'firebase/firestore';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app: Express = express();
 
@@ -14,17 +16,19 @@ const port = 8000;
 app.use(cors());
 app.use(express.json());
 
-type WeatherData = {
-    latitude: number;
-    longitude: number;
-    timezone: string;
-    timezone_abbreviation: string;
-    current: {
-        time: string;
-        interval: number;
-        precipitation: number;
-    };
+const firebaseConfig ={
+    apiKey: process.env.API_KEY,
+    authDomain: process.env.AUTH_DOMAIN,
+    databaseURL: process.env.DATABASE_URL,
+    projectId: process.env.PROJECT_ID,
+    storageBucket: process.env.STORAGE_BUCKET,
+    messagingSenderId: process.env.MESSAGING_SENDER_ID,
+    appId: process.env.APP_ID,
+    measurementId: process.env.MEASUREMENT_ID,
 };
+
+const fb = initializeApp(firebaseConfig);
+const storage = getStorage(fb, process.env.STORAGE_BUCKET);
 
 type FoodData = {
     description: string;
@@ -33,23 +37,6 @@ type FoodData = {
     name: string;
     rating: string;
 }
-
-app.get("/weather", async (req, res) => {
-    console.log("GET /api/weather was called");
-    try {
-        const response = await fetch(
-            "https://api.open-meteo.com/v1/forecast?latitude=40.7411&longitude=73.9897&current=precipitation&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=America%2FNew_York&forecast_days=1"
-        );
-        const data = (await response.json()) as WeatherData;
-        const output: WeatherResponse = {
-            raining: data.current.precipitation > 0.5,
-        };
-        res.json(output);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Something went wrong" });
-    }
-});
 
 app.get("/api/fooddata/:name", async( req, res) => {
      console.log("GET /api/fooddata was called");
@@ -104,7 +91,8 @@ app.get("/api/favfoods/", async(req, res) => {
  app.post("/submit", async(req, res) => {
      console.log("POST /api/submit was called");
      try{
-         const body: FoodData = req.body;
+        console.log(req.body);
+         const body = req.body;
          const docRef = await db.collection("foodinfo");
          await docRef.doc(body.name).set( {
              name: body.name,
@@ -120,11 +108,11 @@ app.get("/api/favfoods/", async(req, res) => {
      }
  });
 
- app.post("/api/upload", async(req,res) => {
-    console.log("POST /api/upload was called");
+ app.post("/upload", async(req,res) => {
+    console.log("POST /upload was called");
     try {
-        const storage = getStorage();
         const file = req.body;
+        console.log(file);
         const metadata = {
             contentType: 'image/jpeg'
           };
@@ -155,7 +143,8 @@ app.get("/api/favfoods/", async(req, res) => {
             }, 
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                console.log('File available at', downloadURL);
+                    res.send(downloadURL);
+                    console.log('File available at', downloadURL);
                 });
             }
             );
