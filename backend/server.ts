@@ -2,13 +2,6 @@ import path from "path";
 import express, { Express } from "express";
 import cors from "cors";
 import { db } from "./firebase";
-import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL, uploadBytes} from "firebase/storage";
-import {doc, setDoc} from 'firebase/firestore';
-
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const app: Express = express();
 
@@ -17,28 +10,6 @@ const port = 8080;
 
 app.use(cors());
 app.use(express.json());
-
-const firebaseConfig ={
-    apiKey: process.env.API_KEY,
-    authDomain: process.env.AUTH_DOMAIN,
-    databaseURL: process.env.DATABASE_URL,
-    projectId: process.env.PROJECT_ID,
-    storageBucket: process.env.STORAGE_BUCKET,
-    messagingSenderId: process.env.MESSAGING_SENDER_ID,
-    appId: process.env.APP_ID,
-    measurementId: process.env.MEASUREMENT_ID,
-};
-
-const fb = initializeApp(firebaseConfig);
-const storage = getStorage(fb, process.env.STORAGE_BUCKET);
-
-type FoodData = {
-    description: string;
-    favorite: boolean;
-    img: string[];
-    name: string;
-    rating: string;
-}
 
 app.get("/fooddata/:name", async( req, res) => {
      console.log("GET /fooddata was called");

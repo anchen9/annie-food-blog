@@ -6,5 +6,5 @@ const leServiceAcct: any = serviceAccount;
 const app = initializeApp({
   credential: cert(leServiceAcct),
 });
-const db = getFirestore(app);
+const db = getFirestore();
 export { db };
