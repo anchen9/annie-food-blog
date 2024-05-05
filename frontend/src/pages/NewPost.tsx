@@ -33,7 +33,7 @@ const NewPost = () => {
     const handleSubmit = () => {
         try{
             fetch(
-                `${BACKEND_BASE_PATH}/api/submit`, {
+                `${BACKEND_BASE_PATH}/submit`, {
                     method: "POST",
                     headers: {
                         'content-type': 'application/json',

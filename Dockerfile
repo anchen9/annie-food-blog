@@ -5,7 +5,7 @@ FROM nginx:stable-alpine
 RUN apk add --update nodejs npm
 
 # Install pnpm
-RUN npm install -g pnpm@8.6.10
+RUN npm install -g pnpm
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 

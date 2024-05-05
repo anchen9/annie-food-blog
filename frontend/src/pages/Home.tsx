@@ -18,7 +18,7 @@ const HomePage = () => {
 
     useEffect(() => {
         fetch(
-            `${BACKEND_BASE_PATH}/api/favfoods`
+            `${BACKEND_BASE_PATH}/favfoods`
         )
           .then((res) => res.json())
           .then((d) => {

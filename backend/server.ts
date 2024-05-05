@@ -8,8 +8,6 @@ import {doc, setDoc} from 'firebase/firestore';
 
 import dotenv from 'dotenv';
 
-
-
 dotenv.config();
 
 const app: Express = express();
@@ -19,12 +17,6 @@ const port = 8080;
 
 app.use(cors());
 app.use(express.json());
-
-const bodyParser = require('body-parser');
-
-app.use(bodyParser.json({ limit: '50MB' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '50MB' }));
-
 
 const firebaseConfig ={
     apiKey: process.env.API_KEY,
@@ -48,8 +40,8 @@ type FoodData = {
     rating: string;
 }
 
-app.get("/api/fooddata/:name", async( req, res) => {
-     console.log("GET /api/fooddata was called");
+app.get("/fooddata/:name", async( req, res) => {
+     console.log("GET /fooddata was called");
      try {
          const response = await db.collection("foodinfo").doc(req.params.name).get();
          if (response.exists){
@@ -64,8 +56,8 @@ app.get("/api/fooddata/:name", async( req, res) => {
      }
  });
 
- app.get("/api/allfoods/", async( req, res) => {
-    console.log("GET /api/allfoods was called");
+ app.get("/allfoods/", async( req, res) => {
+    console.log("GET /allfoods was called");
     try {
         var output: any = {};
         await db.collection("foodinfo").get().then((querySnapshot) => {
@@ -81,8 +73,8 @@ app.get("/api/fooddata/:name", async( req, res) => {
     }
 });
 
-app.get("/api/favfoods/", async(req, res) => {
-    console.log("GET /api/favfoods was called");
+app.get("/favfoods/", async(req, res) => {
+    console.log("GET /favfoods was called");
     try{
         var output: any = {};
         await db.collection("foodinfo").where("favorite", "==", true).get().then((querySnapshot) => {
@@ -98,8 +90,8 @@ app.get("/api/favfoods/", async(req, res) => {
     }
 });
 
- app.post("/api/submit", async(req, res) => {
-     console.log("POST /api/submit was called");
+ app.post("/submit", async(req, res) => {
+     console.log("POST /submit was called");
      try{
         console.log(req.body);
          const body = req.body;
@@ -119,8 +111,8 @@ app.get("/api/favfoods/", async(req, res) => {
      }
  });
  
- app.get("/api/favorites", async(req, res) => {
-     console.log("GET /api/favorites was called");
+ app.get("/favorites", async(req, res) => {
+     console.log("GET /favorites was called");
      try {
          const response = await db.collection("favorites").get();
          res.json(response);
@@ -130,8 +122,8 @@ app.get("/api/favfoods/", async(req, res) => {
      }
  });
 
- app.put("/api/addfavorite/:name", async(req, res) => {
-    console.log("PUT /api/addfavorite was called");
+ app.put("/addfavorite/:name", async(req, res) => {
+    console.log("PUT /addfavorite was called");
     try {
         console.log(req.body);
         const body: boolean = req.body.favorite;
@@ -148,8 +140,8 @@ app.get("/api/favfoods/", async(req, res) => {
     }
  });
 
- app.delete("/api/del/:name", async(req, res) => {
-    console.log("DELETE /api/del was called");
+ app.delete("/del/:name", async(req, res) => {
+    console.log("DELETE /del was called");
     try{
         const response = await db.collection("foodinfo").doc(req.params.name).get();
         if (response.exists){

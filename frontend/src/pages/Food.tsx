@@ -19,7 +19,12 @@ const FoodPage = () => {
 
     useEffect(() => {
         fetch(
-            `${BACKEND_BASE_PATH}/api/allfoods`
+            `${BACKEND_BASE_PATH}/allfoods`, {
+                method: "GET",
+                headers: {
+                    'content-type': 'application/json',
+                  },
+            }
         )
           .then((res) => res.json())
           .then((d) => {
@@ -27,6 +32,7 @@ const FoodPage = () => {
             setData(d);
           })
           .catch((error) => {
+            console.log("unable to fetch");
             console.log("Errored", error);
           })
       }, []
