@@ -3,10 +3,12 @@ import express, { Express } from "express";
 import cors from "cors";
 import { db } from "./firebase";
 import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, uploadBytes} from "firebase/storage";
 import {doc, setDoc} from 'firebase/firestore';
 
 import dotenv from 'dotenv';
+
+
 
 dotenv.config();
 
@@ -17,6 +19,12 @@ const port = 8000;
 
 app.use(cors());
 app.use(express.json());
+
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json({ limit: '50MB' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50MB' }));
+
 
 const firebaseConfig ={
     apiKey: process.env.API_KEY,
@@ -110,56 +118,7 @@ app.get("/api/favfoods/", async(req, res) => {
          res.status(500).json({error: "Unable to make New Post"});
      }
  });
-
- app.post("/api/upload", async(req,res) => {
-    console.log("POST /api/upload was called");
-    try {
-        const file = req.body.file;
-        if (!file) {
-            return res.status(400).json({ error: 'No file uploaded' });
-        }
-        console.log(file);
-        const metadata = { contentType: 'image/jpeg' };
-        const storageRef = ref(storage, 'images/' + file.originalname);
-        const uploadTask = uploadBytesResumable(storageRef, file.buffer, metadata);
-        
-        uploadTask.on('state_changed',
-            (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + progress + '% done');
-                switch (snapshot.state) {
-                case 'paused':
-                    console.log('Upload is paused');
-                    break;
-                case 'running':
-                    console.log('Upload is running');
-                    break;
-                }
-            }, 
-            (error) => {
-                switch (error.code) {
-                case 'storage/unauthorized':
-                    break;
-                case 'storage/canceled':
-                    break;
-                case 'storage/unknown':
-                    break;
-                }
-            }, 
-            () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    res.send(downloadURL);
-                    console.log('File available at', downloadURL);
-                });
-            }
-            );
-        
-    }catch(error) {
-        console.error(error);
-        res.status(500).json({error: "Unable to upload file"});
-    }
- });
-
+ 
  app.get("/api/favorites", async(req, res) => {
      console.log("GET /api/favorites was called");
      try {
