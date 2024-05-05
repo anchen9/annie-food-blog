@@ -15,7 +15,7 @@ import NewPost from "../pages/NewPost";
  * If you've already deployed your app (using `fly launch` or `fly deploy`),
  * you can find the name by running `flyctl status`, under App > Name.
  */
-export const BACKEND_BASE_PATH = 'http://localhost:8000';
+export const BACKEND_BASE_PATH = 'https://annie-food-blog.fly.dev/api';
 
 export const PATHS: {
     link: string;
