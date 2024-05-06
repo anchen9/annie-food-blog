@@ -12,9 +12,5 @@
         "turbo": "^1.13.3"
     },
     "packageManager": "pnpm@8.6.10",
-    "name": "full-stack",
-    "dependencies": {
-        "@types/firebase": "^3.2.1",
-        "firebase": "^9.17.2"
-    }
+    "name": "full-stack"
 }

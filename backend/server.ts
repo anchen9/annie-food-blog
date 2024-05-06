@@ -27,7 +27,7 @@ app.get("/fooddata/:name", async( req, res) => {
      }
  });
 
- app.get("/allfoods/", async( req, res) => {
+ app.get("/allfoods", async( req, res) => {
     console.log("GET /allfoods was called");
     try {
         var output: any = {};
@@ -44,7 +44,7 @@ app.get("/fooddata/:name", async( req, res) => {
     }
 });
 
-app.get("/favfoods/", async(req, res) => {
+app.get("/favfoods", async(req, res) => {
     console.log("GET /favfoods was called");
     try{
         var output: any = {};
