@@ -11,7 +11,7 @@ export const signIn = async () => {
     const user = result.user;
 
     return { token, user };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     const code = err.code;
     const message = err.message;

@@ -9,12 +9,8 @@
     "devDependencies": {
         "eslint": "^8.48.0",
         "prettier": "^3.0.3",
-        "turbo": "^1.13.3"
+        "turbo": "latest"
     },
     "packageManager": "pnpm@8.6.10",
-    "name": "full-stack",
-    "dependencies": {
-        "@types/firebase": "^3.2.1",
-        "firebase": "^9.17.2"
-    }
+    "name": "full-stack"
 }
